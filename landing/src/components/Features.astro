@@ -1,0 +1,66 @@
+---
+// Features.astro - what the window does, in the order a session happens in
+import { FEATURES_DOC_URL } from '../data/site';
+
+const features = [
+  {
+    title: 'Every request, as it happens',
+    text: 'HTTP/1.1, HTTP/2, WebSocket and server-sent events, over HTTPS through a certificate authority made for your machine alone. Rows appear while a response is still arriving.',
+    tags: ['HTTP/2', 'WebSocket', 'SSE', 'mTLS'],
+  },
+  {
+    title: 'Bodies read, not guessed',
+    text: 'JSON laid out and folded, XML a tag a line, MessagePack, CBOR, Protobuf and gRPC shown as the JSON they hold, CSV as a table, images as images. gzip, Brotli, zstd and deflate opened for you.',
+    tags: ['Protobuf', 'gRPC', 'CBOR', 'MessagePack'],
+  },
+  {
+    title: 'Change it on the way',
+    text: 'Breakpoints that hold a request, a response, or a socket message until you send it on, changed or not. Rules to map to a local file or another host, set headers, rewrite bodies, or run a JavaScript file on each one.',
+    tags: ['Breakpoints', 'Rules', 'Scripts'],
+  },
+  {
+    title: 'What a slow network does',
+    text: 'Throttle a host to a chosen bandwidth and round trip, and watch what your app does about it — WebSockets and streams included, with the conditions named on the flow.',
+    tags: ['Throttling', 'Latency'],
+  },
+  {
+    title: 'Phones and emulators',
+    text: 'Set a device up from a QR code, with help for Android 14 and later and for the iOS simulators on a Mac. Keys written for Wireshark when you need the packets themselves.',
+    tags: ['Android', 'iOS', 'Wireshark'],
+  },
+  {
+    title: 'Yours alone',
+    text: 'It runs on your machine and nothing leaves it: no account, no cloud, no telemetry. The certificate authority is made here and stays here, and the source is GPL-3.0-or-later.',
+    tags: ['No account', 'No telemetry', 'GPL-3.0'],
+  },
+];
+---
+
+<section class="section" id="what">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">What it does</span>
+      <h2>A debugger for traffic, not a log of it</h2>
+      <p>
+        Everything below is in the window today. The full table, with what is
+        still to come, is <a href={FEATURES_DOC_URL}>in the repository</a>.
+      </p>
+    </div>
+
+    <div class="bento-grid">
+      {
+        features.map((feature) => (
+          <article class="bento-card">
+            <h3 class="bento-title">{feature.title}</h3>
+            <p class="bento-text">{feature.text}</p>
+            <div class="bento-badge-row">
+              {feature.tags.map((tag) => (
+                <span class="badge-accent-tag">{tag}</span>
+              ))}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

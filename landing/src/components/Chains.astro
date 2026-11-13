@@ -1,0 +1,92 @@
+---
+// Chains.astro - JSON-RPC read as JSON-RPC: the part a general proxy leaves as
+// hex. Everything here is in the window today.
+---
+
+<section class="section" id="chains">
+  <div class="container chains-inner">
+    <div class="chains-text">
+      <span class="eyebrow">JSON-RPC</span>
+      <h2>Four bytes of hex, read as the call they are</h2>
+      <p class="bento-text">
+        A node answers in words nobody reads: a <code>data</code> field of hex, a
+        signed transaction as RLP, a revert that came back with status 200. tracewing
+        reads them where they stand, and lets you write them back the same way.
+      </p>
+      <ul class="check-list">
+        <li>
+          Calldata named and laid out — <code>balanceOf(0xd8dA…)</code> with its
+          arguments — by the calls every chain shares, or by an ABI you choose in
+          Settings.
+        </li>
+        <li>
+          A signed transaction out of its RLP, with <strong>who signed it</strong>
+          recovered from the signature, amounts in ether, fees in gwei and addresses
+          in their EIP-55 capitals.
+        </li>
+        <li>
+          Solana and Bitcoin too: base58 and lamports, a transaction's own id worked
+          out from its bytes, and the accounts a program was given.
+        </li>
+        <li>
+          Write a call out in Compose — or in a message to an open socket — and it
+          goes as the calldata it stands for.
+        </li>
+        <li>
+          A warning when an edit has left a signature over bytes that are gone, with
+          the address the signature now works out to instead. tracewing holds no
+          keys and signs nothing.
+        </li>
+      </ul>
+    </div>
+
+    <figure class="chains-shot">
+      <img
+        src="/shots/rpc.webp"
+        width="1600"
+        height="1000"
+        alt="The inspector reading a JSON-RPC call: the function it names, its arguments, and the transaction's fields."
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+  </div>
+</section>
+
+<style>
+  .chains-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .chains-text h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .chains-text > .bento-text {
+    margin-bottom: 1.75rem;
+  }
+
+  .chains-shot {
+    margin: 0;
+  }
+
+  .chains-shot img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+  }
+
+  @media (max-width: 60rem) {
+    .chains-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

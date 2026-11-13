@@ -1,0 +1,161 @@
+---
+// Hero.astro - what tracewing is, where it stands, and its window at work
+import Shot from './Shot.astro';
+import { GITHUB_URL } from '../data/site';
+import { VERSION } from '../data/downloads';
+---
+
+<section class="hero">
+  <div class="bg-grid-overlay"></div>
+  <div class="container hero-inner">
+    <a href="#get" class="linear-pill pill-glow hero-pill">
+      <span class="pulse"></span>
+      tracewing {VERSION} · free and open source
+    </a>
+
+    <h1 class="hero-title">
+      <span class="text-gradient-white">See every request.</span>
+      <br />
+      <span class="text-gradient-neon">Even a million of them.</span>
+    </h1>
+
+    <p class="hero-lead">
+      For everything your browser's DevTools can't see:{' '}
+      <strong>mobile apps</strong>, <strong>desktop apps</strong>,{' '}
+      <strong>servers</strong> and <strong>AI agents</strong>.
+    </p>
+
+    <p class="hero-sub">
+      See, pause and change every request they make. Native, for Windows, macOS
+      and Linux.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#get" class="btn btn-primary">
+        Download
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        </svg>
+      </a>
+      <a
+        href={GITHUB_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-secondary"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 2A10 10 0 0 0 8.84 21.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.84-2.34 4.68-4.57 4.93.36.31.69.92.69 1.85V21c0 .27.16.59.67.5A10 10 0 0 0 12 2Z"
+          ></path>
+        </svg>
+        Source on GitHub
+      </a>
+    </div>
+
+    <ul class="hero-meta">
+      <li>Linux</li>
+      <li>Windows</li>
+      <li>macOS</li>
+      <li>Rust + GPUI</li>
+      <li>15 languages</li>
+      <li>GPL-3.0-or-later</li>
+    </ul>
+  </div>
+
+  <Shot />
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding: 5rem 0 0;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-pill {
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.3rem, 6.5vw, 4.25rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-lead {
+    max-width: 44rem;
+    font-size: clamp(1.0625rem, 2.2vw, 1.375rem);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .hero-lead strong {
+    color: var(--accent-light);
+    font-weight: 600;
+  }
+
+  .hero-sub {
+    max-width: 44rem;
+    color: var(--text-secondary);
+    font-size: clamp(1rem, 2vw, 1.1875rem);
+    margin-bottom: 2.25rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-meta {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    justify-content: center;
+    padding: 0;
+    margin: 0 0 3.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+
+  .hero-meta li {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .hero-meta li:not(:last-child)::after {
+    content: '';
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+</style>

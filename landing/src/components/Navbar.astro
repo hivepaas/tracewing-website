@@ -1,0 +1,102 @@
+---
+// Navbar.astro - the name, the sections, and the way to the source
+import { GITHUB_URL } from '../data/site';
+
+const links = [
+  { href: '#what', text: 'What it does' },
+  { href: '#measured', text: 'Measured' },
+  { href: '#chains', text: 'JSON-RPC' },
+  { href: '#get', text: 'Get it' },
+];
+---
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="nav-name">
+      <img
+        class="nav-mark"
+        src="/favicon.svg"
+        width="22"
+        height="22"
+        alt=""
+        aria-hidden="true"
+      />
+      tracewing
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      {links.map((link) => <a href={link.href}>{link.text}</a>)}
+    </nav>
+    <a
+      href={GITHUB_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-secondary nav-source">Source</a
+    >
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    background: rgba(20, 21, 23, 0.82);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-name {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-weight: 800;
+    font-size: 1.0625rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-mark {
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 5px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-left: auto;
+    font-size: 0.9375rem;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+  }
+
+  .nav-links a:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-source {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 52rem) {
+    .nav-links {
+      display: none;
+    }
+
+    .nav-source {
+      margin-left: auto;
+    }
+  }
+</style>

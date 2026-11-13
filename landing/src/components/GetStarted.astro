@@ -1,0 +1,280 @@
+---
+// GetStarted.astro - the release's files, one system at a time, and the way to
+// build it instead.
+//
+// The panels are all shown until the script picks one: with no JavaScript the
+// page is three stacked panels rather than one system's files and no way to
+// reach the others.
+import {
+  RELEASE_URL,
+  VERSION,
+  comingSoon,
+  fromSource,
+  systems,
+} from '../data/downloads';
+import { BUILD_DOC_URL } from '../data/site';
+
+const tabs = [...systems, ...comingSoon];
+---
+
+<section class="section get" id="get">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Get it</span>
+      <h2>Download tracewing {VERSION}</h2>
+      <p>
+        Free and open source, for Linux, macOS and Windows. Nothing to sign up
+        for: it runs on your machine and sends nothing anywhere. <a
+          href={RELEASE_URL}>What is in this release</a
+        >.
+      </p>
+    </div>
+
+    <div class="tabs" data-tabs>
+      <div class="tab-row" role="tablist" aria-label="Systems">
+        {
+          tabs.map((os, index) => (
+            <button
+              type="button"
+              class="tab"
+              role="tab"
+              id={`tab-${os.id}`}
+              data-os={os.id}
+              aria-controls={`panel-${os.id}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+            >
+              {os.name}
+            </button>
+          ))
+        }
+      </div>
+
+      {
+        systems.map((os) => (
+          <div
+            class="panel"
+            role="tabpanel"
+            id={`panel-${os.id}`}
+            aria-labelledby={`tab-${os.id}`}
+            data-os={os.id}
+          >
+            <div class="panel-grid">
+              <div>
+                <p class="requires">{os.requires}</p>
+                <div class="files">
+                  {os.downloads.map((download) => (
+                    <a
+                      href={download.href}
+                      class={`btn ${download.primary ? 'btn-primary' : 'btn-secondary'} file`}
+                    >
+                      <span class="file-label">{download.label}</span>
+                      <span class="file-note">{download.note}</span>
+                    </a>
+                  ))}
+                </div>
+                <p class="first-run">{os.firstRun}</p>
+              </div>
+
+              <div>
+                <h3 class="bento-title">Then</h3>
+                <ol class="steps">
+                  {os.steps.map((step) => (
+                    <li>{step}</li>
+                  ))}
+                </ol>
+                {os.commands && <div class="term">{os.commands}</div>}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+
+      {
+        comingSoon.map((os) => (
+          <div
+            class="panel"
+            role="tabpanel"
+            id={`panel-${os.id}`}
+            aria-labelledby={`tab-${os.id}`}
+            data-os={os.id}
+          >
+            <p class="bento-text">{os.text}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="bento-card source">
+      <h3 class="bento-title">Or build it from source</h3>
+      <p class="bento-text">
+        Needs Rust; the repository's <code>rust-toolchain.toml</code> picks the
+        version. On Linux the window also needs the packages named in the CI
+        workflow, and builds for Wayland unless you ask for X11.
+      </p>
+      <div class="term">
+        {
+          fromSource.map((line) => (
+            <div>
+              <span class="prompt">$ </span>
+              {line}
+            </div>
+          ))
+        }
+      </div>
+      <a href={BUILD_DOC_URL} class="btn btn-secondary source-btn"
+        >Build instructions</a
+      >
+    </div>
+  </div>
+</section>
+
+<script>
+  // One panel at a time, the system you are on if it is one of them.
+  const guess = (): string => {
+    const agent = navigator.userAgent;
+    if (/Mac/i.test(agent)) return 'macos';
+    if (/Win/i.test(agent)) return 'windows';
+    return 'linux';
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((group) => {
+    const tabs = Array.from(group.querySelectorAll<HTMLElement>('.tab'));
+    const panels = Array.from(group.querySelectorAll<HTMLElement>('.panel'));
+    if (!tabs.length) return;
+
+    const show = (id: string) => {
+      tabs.forEach((tab) =>
+        tab.setAttribute('aria-selected', String(tab.dataset.os === id))
+      );
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.os !== id;
+      });
+    };
+
+    const ids = tabs.map((tab) => tab.dataset.os ?? '');
+    const start = ids.includes(guess()) ? guess() : ids[0];
+    show(start);
+
+    tabs.forEach((tab, at) => {
+      tab.addEventListener('click', () => show(tab.dataset.os ?? ids[0]));
+      tab.addEventListener('keydown', (event: KeyboardEvent) => {
+        const step =
+          event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+        if (!step) return;
+        event.preventDefault();
+        const next = tabs[(at + step + tabs.length) % tabs.length];
+        next.focus();
+        show(next.dataset.os ?? ids[0]);
+      });
+    });
+  });
+</script>
+
+<style>
+  .get {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .tab-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+  }
+
+  .tab {
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--border-card);
+    border-radius: 999px;
+    padding: 0.5rem 1.25rem;
+    cursor: pointer;
+  }
+
+  .tab[aria-selected='true'] {
+    background: rgba(122, 162, 255, 0.12);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+
+  .panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    padding: var(--card-pad);
+  }
+
+  .panel + .panel {
+    margin-top: 1rem;
+  }
+
+  .panel-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 2rem;
+  }
+
+  .requires {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .files {
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  .file {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .file-label {
+    font-weight: 700;
+  }
+
+  .file-note {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    opacity: 0.75;
+  }
+
+  .first-run {
+    margin-top: 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+
+  .steps {
+    margin: 0 0 1.25rem;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .source {
+    margin-top: 1.5rem;
+  }
+
+  .source-btn {
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 60rem) {
+    .panel-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,92 @@
+---
+// BaseLayout.astro - every page's <head>, background, navbar and footer
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_URL } from '../data/site';
+
+interface Props {
+  /** The <title>, and the social cards' title. */
+  title: string;
+  description: string;
+  /** The page's path, such as "/": its canonical URL. */
+  path: string;
+  /** schema.org objects, one <script type="application/ld+json"> each. */
+  jsonLd?: object[];
+  keywords?: string;
+  ogImageAlt?: string;
+  /** Kept out of search engines: a page built but not offered. */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  path,
+  jsonLd = [],
+  keywords,
+  ogImageAlt = 'tracewing — a native HTTP(S) debugging proxy that keeps up with big sessions.',
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL(SITE_URL);
+const pageUrl = new URL(path, site).href;
+const ogImage = new URL('/og-image.png', site).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#141517" />
+
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <meta name="author" content="HivePaaS" />
+    <meta
+      name="robots"
+      content={noindex ? 'noindex, nofollow' : 'index, follow'}
+    />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="tracewing" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    {
+      jsonLd.map((data) => (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(data)}
+          is:inline
+        />
+      ))
+    }
+  </head>
+  <body>
+    <a href="#main" class="visually-hidden">Skip to content</a>
+    <Navbar />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

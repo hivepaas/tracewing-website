@@ -1,0 +1,131 @@
+---
+// Footer.astro - where the source, the docs and the rest of the family are
+import {
+  BUILD_DOC_URL,
+  CONTRIBUTING_URL,
+  FEATURES_DOC_URL,
+  GITHUB_URL,
+  HIVEPAAS_URL,
+  ISSUES_URL,
+  LICENSE_URL,
+  MEASUREMENTS_DOC_URL,
+  PACKWING_URL,
+  SCRIPTS_DOC_URL,
+  SHELLWING_URL,
+} from '../data/site';
+
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: 'tracewing',
+    links: [
+      { text: 'What it does', href: '/#what' },
+      { text: 'Measured', href: '/#measured' },
+      { text: 'JSON-RPC', href: '/#chains' },
+      { text: 'Download', href: '/#get' },
+      { text: 'Questions', href: '/#faq' },
+    ],
+  },
+  {
+    title: 'Docs',
+    links: [
+      { text: 'Build from source', href: BUILD_DOC_URL },
+      { text: 'Features', href: FEATURES_DOC_URL },
+      { text: 'Measurements', href: MEASUREMENTS_DOC_URL },
+      { text: 'Scripts', href: SCRIPTS_DOC_URL },
+      { text: 'Contributing', href: CONTRIBUTING_URL },
+    ],
+  },
+  {
+    title: 'Source',
+    links: [
+      { text: 'GitHub', href: GITHUB_URL },
+      { text: 'Issues', href: ISSUES_URL },
+      { text: 'License (GPL-3.0-or-later)', href: LICENSE_URL },
+    ],
+  },
+  {
+    title: 'HivePaaS',
+    links: [
+      { text: 'hivepaas', href: HIVEPAAS_URL },
+      { text: 'shellwing', href: SHELLWING_URL },
+      { text: 'packwing', href: PACKWING_URL },
+    ],
+  },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      {
+        columns.map((column) => (
+          <div>
+            <h3 class="footer-title">{column.title}</h3>
+            <ul>
+              {column.links.map((link) => (
+                <li>
+                  <a href={link.href}>{link.text}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <p class="footer-note">
+      © {year} HivePaaS · tracewing runs on your machine and sends nothing
+      anywhere.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border-subtle);
+    padding: 3.5rem 0 2.5rem;
+    background: var(--bg-primary);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.9rem;
+  }
+
+  .footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .footer a {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .footer a:hover {
+    color: var(--text-primary);
+  }
+
+  .footer-note {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+  }
+</style>

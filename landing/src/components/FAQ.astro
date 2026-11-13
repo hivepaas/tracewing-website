@@ -1,0 +1,75 @@
+---
+// FAQ.astro - the questions, as <details> so one opens without JavaScript
+import { faq } from '../data/faq';
+import { ISSUES_URL } from '../data/site';
+---
+
+<section class="section" id="faq">
+  <div class="container faq-inner">
+    <div class="section-header">
+      <span class="eyebrow">Questions</span>
+      <h2>Asked and answered</h2>
+      <p>
+        Anything else, or something that looks wrong: <a href={ISSUES_URL}
+          >open an issue</a
+        >.
+      </p>
+    </div>
+
+    <div class="faq-list">
+      {
+        faq.map((item) => (
+          <details class="faq-item">
+            <summary>{item.question}</summary>
+            <p class="bento-text">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    max-width: 48rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    padding: 1.1rem var(--inset-pad);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    color: var(--accent);
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .faq-item[open] summary {
+    margin-bottom: 0.75rem;
+  }
+</style>

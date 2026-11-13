@@ -1,0 +1,44 @@
+---
+// Shot.astro - the app's own window, as its tests draw it
+---
+
+<div class="container">
+  <figure class="shot">
+    <img
+      src="/shots/traffic.webp"
+      width="1600"
+      height="1000"
+      alt="tracewing's window: a list of requests, with one request's JSON body laid out beside it."
+      loading="eager"
+      decoding="async"
+    />
+    <figcaption>
+      The window as the app's own tests draw it, with no display attached.
+    </figcaption>
+  </figure>
+</div>
+
+<style>
+  .shot {
+    margin: 0;
+    position: relative;
+  }
+
+  .shot img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.5),
+      0 40px 80px -20px rgba(0, 0, 0, 0.8),
+      0 0 120px -40px var(--accent-glow);
+  }
+
+  .shot figcaption {
+    margin-top: 1rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+  }
+</style>

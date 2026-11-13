@@ -1,0 +1,100 @@
+---
+// Measured.astro - the numbers out of docs/measurements.md, with the link to
+// the conditions they were taken under. Nothing here is a guess.
+import { MEASUREMENTS_DOC_URL } from '../data/site';
+
+const numbers = [
+  {
+    figure: '102,045',
+    unit: 'requests a second',
+    text: 'A million requests through the proxy, every one recorded and none dropped. p50 0.61 ms, p99 0.91 ms.',
+  },
+  {
+    figure: '8.33 ms',
+    unit: 'a frame, at 120 Hz',
+    text: 'A million rows scrolled in a real window. Every frame after the first few met the display, and GPUI never took longer than 11.8 ms.',
+  },
+  {
+    figure: '99,300',
+    unit: 'a second, while you scroll',
+    text: 'Traffic kept arriving at that rate with the window open and the list moving: 1.43 ms per frame at p50.',
+  },
+  {
+    figure: '205 MiB',
+    unit: 'for the whole thing',
+    text: 'The peak for the process with a million flows recorded. A gigabyte of bodies streams through instead of piling up.',
+  },
+];
+---
+
+<section class="section measured" id="measured">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Measured</span>
+      <h2>Numbers, not adjectives</h2>
+      <p>
+        Taken on Linux with 32 threads, over loopback, with 64 clients asking for
+        1 KiB of JSON. Every figure here, the conditions, and the two bugs the
+        benchmarks found are <a href={MEASUREMENTS_DOC_URL}
+          >written down in the repository</a
+        >.
+      </p>
+    </div>
+
+    <div class="numbers">
+      {
+        numbers.map((number) => (
+          <article class="number">
+            <p class="figure">{number.figure}</p>
+            <p class="unit">{number.unit}</p>
+            <p class="bento-text">{number.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .measured {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  .number {
+    padding: var(--card-pad);
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+  }
+
+  .figure {
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(
+      135deg,
+      var(--accent) 0%,
+      var(--accent-violet) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .unit {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+</style>

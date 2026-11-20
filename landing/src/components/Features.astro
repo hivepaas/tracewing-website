@@ -1,16 +1,22 @@
 ---
-// Features.astro - what the window does, in the order a session happens in
+// Features.astro - what the window does, in the order a session happens in.
+//
+// What has a section of its own further down is not repeated here: the ways in
+// (Ways), the programs that read no proxy setting (Local), values read where
+// they stand (Reads) and JSON-RPC (Chains). Each card is something in the
+// window today — the roadmap belongs in the repository, where the milestone
+// against each line can be read.
 import { FEATURES_DOC_URL } from '../data/site';
 
 const features = [
   {
     title: 'Every request, as it happens',
-    text: 'HTTP/1.1, HTTP/2, WebSocket and server-sent events, over HTTPS through a certificate authority made for your machine alone. Rows appear while a response is still arriving.',
+    text: 'HTTP/1.1, HTTP/2, WebSocket, server-sent events and JSON lines, over HTTPS through a certificate authority made for your machine alone. Rows appear while a response is still arriving, and anything still going after two seconds is listed while it lasts.',
     tags: ['HTTP/2', 'WebSocket', 'SSE', 'mTLS'],
   },
   {
     title: 'Bodies read, not guessed',
-    text: 'JSON laid out and folded, XML a tag a line, MessagePack, CBOR, Protobuf and gRPC shown as the JSON they hold, CSV as a table, images as images. gzip, Brotli, zstd and deflate opened for you.',
+    text: 'JSON laid out and folded, XML a tag a line, MessagePack, CBOR, Protobuf and gRPC shown as the JSON they hold — named by a .proto file, or fetched from the server by reflection. CSV as a table, images as images. gzip, Brotli, zstd and deflate opened for you.',
     tags: ['Protobuf', 'gRPC', 'CBOR', 'MessagePack'],
   },
   {
@@ -19,14 +25,29 @@ const features = [
     tags: ['Breakpoints', 'Rules', 'Scripts'],
   },
   {
+    title: 'Two flows, side by side',
+    text: 'The one that works and the one that does not: method, URL, status, sizes and time, headers and query matched by name, bodies line by line — or JSON by field, showing only what differs under the objects that hold it. "Compare with the call before" finds the other one for you.',
+    tags: ['Compare', 'JSON by field'],
+  },
+  {
     title: 'What a slow network does',
     text: 'Throttle a host to a chosen bandwidth and round trip, and watch what your app does about it — WebSockets and streams included, with the conditions named on the flow.',
     tags: ['Throttling', 'Latency'],
   },
   {
     title: 'Phones and emulators',
-    text: 'Set a device up from a QR code, with help for Android 14 and later and for the iOS simulators on a Mac. Keys written for Wireshark when you need the packets themselves.',
+    text: 'Set a device up from a QR code. Android emulators are set up over ADB in one step, on every device found at once, and so are the iOS simulators on a Mac. Help for Android 14 and later, and keys written for Wireshark when you need the packets themselves.',
     tags: ['Android', 'iOS', 'Wireshark'],
+  },
+  {
+    title: 'Your AI tools can read it',
+    text: 'An MCP server the agent you already use can connect to: list and search flows, read one whole, compare two. Adding rules and sending requests are its own switch in Settings, off until you turn it on.',
+    tags: ['MCP', 'Off by default'],
+  },
+  {
+    title: 'A window to live in',
+    text: 'Light and dark, each in styles. Text from 11 to 20 px and the whole window grows with it. Every panel moved, resized or hidden — and remembered. Keyboard first throughout, in 15 languages.',
+    tags: ['Light & dark', '15 languages', 'Keyboard'],
   },
   {
     title: 'Yours alone',

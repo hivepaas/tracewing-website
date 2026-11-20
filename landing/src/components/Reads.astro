@@ -1,0 +1,149 @@
+---
+// Reads.astro - the readings pane: a value says what it is where it stands.
+//
+// The shot is the one the app's own tests draw, and the chain of chips under
+// the text is the reading it shows in it, not an example invented here.
+---
+
+<section class="section reads" id="reads">
+  <div class="container reads-inner">
+    <figure class="reads-shot">
+      <img
+        src="/shots/reading.webp"
+        width="1600"
+        height="1000"
+        alt="A JSON body with its values underlined, and the readings pane beside it reading one of them from base64 into the JSON it holds."
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+
+    <div class="reads-text">
+      <span class="eyebrow">Reading values</span>
+      <h2>A value says what it is, where it stands</h2>
+      <p class="bento-text">
+        <code>1794492800123</code> is a time, <code>P1Y2M10DT2H30M</code> is
+        fourteen months, <code>xn--bcher-kva.example.com</code> is a name with
+        an umlaut in it, and the token three fields up has your own user id in
+        it. tracewing underlines the ones it can read and tells you — no tab
+        to leave, nothing to paste anywhere.
+      </p>
+
+      <div class="chain" aria-label="A reading that goes through three steps">
+        <span class="chain-step">base64</span>
+        <span class="chain-arrow" aria-hidden="true">→</span>
+        <span class="chain-step">gzip</span>
+        <span class="chain-arrow" aria-hidden="true">→</span>
+        <span class="chain-step chain-end">JSON</span>
+      </div>
+
+      <ul class="check-list">
+        <li>
+          <strong>Chained where one holds another.</strong> A blob that is base64
+          around gzip around JSON is read all the way down, in one reading, and
+          shown as the JSON it was always holding.
+        </li>
+        <li>
+          <strong>Remembered.</strong> <em>Always read payload this way</em> and
+          that field, on that host, reads itself from the next request on.
+        </li>
+        <li>
+          <strong>Times in every shape:</strong> seconds, milliseconds, microseconds
+          and nanoseconds, ISO 8601 and HTTP-date — each as local time and as "4
+          minutes ago" — and the time buried inside a UUIDv7, a ULID, a Snowflake
+          or an ObjectId.
+        </li>
+        <li>
+          <strong>Tokens opened:</strong> a JWT's claims, a framework's signed session
+          cookie (Rails, Django, Laravel, Flask), an AWS SigV4 authorization, a JWK
+          and a JWKS a key at a time.
+        </li>
+        <li>
+          <strong>And the small things that cost an hour:</strong> a bitmask as the
+          flags it sets, a byte count as <code>1 MiB</code>, <code>Basic</code> as
+          its user and password, <code>Cache-Control</code> as a sentence,{' '}
+          <code>traceparent</code> as trace and span, a Content-Security-Policy a
+          directive to a row.
+        </li>
+        <li>
+          <strong>Wherever a value is:</strong> headers, cookies, query and form fields,
+          bodies, and the messages of a stream or an open socket.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reads-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .reads-text h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .reads-text > .bento-text {
+    margin-bottom: 1.5rem;
+  }
+
+  .reads-shot {
+    margin: 0;
+  }
+
+  .reads-shot img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+  }
+
+  /* The steps one reading went through, as the pane names them. */
+  .chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .chain-step {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-card);
+    color: var(--text-secondary);
+  }
+
+  .chain-end {
+    background: rgba(122, 162, 255, 0.12);
+    border-color: rgba(122, 162, 255, 0.35);
+    color: var(--accent-light);
+    font-weight: 600;
+  }
+
+  .chain-arrow {
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 60rem) {
+    .reads-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    /* The picture first on a narrow screen, as it is wide: the text that
+       explains it then runs under it rather than above a wall of nothing. */
+    .reads-shot {
+      order: -1;
+    }
+  }
+</style>

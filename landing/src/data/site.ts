@@ -14,6 +14,7 @@ export const SHOW_PRICING = false;
 
 // The repository's docs.
 export const BUILD_DOC_URL = `${GITHUB_URL}/blob/main/docs/building.md`;
+export const CAPTURING_DOC_URL = `${GITHUB_URL}/blob/main/docs/capturing.md`;
 export const FEATURES_DOC_URL = `${GITHUB_URL}/blob/main/docs/features.md`;
 export const MEASUREMENTS_DOC_URL = `${GITHUB_URL}/blob/main/docs/measurements.md`;
 export const SCRIPTS_DOC_URL = `${GITHUB_URL}/blob/main/docs/scripts.md`;

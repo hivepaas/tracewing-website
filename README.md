@@ -12,11 +12,27 @@ yarn lint
 ```
 
 - **Screenshots.** The pictures in `landing/public/shots/` are the app's own, as
-  tracewing's tests draw them with no display attached
-  (`cargo test --release -p tracewing --features headless --test screen --test rpc`,
-  written to `target/shots/*.png`), resized to 1600×1000 and saved as WebP. Only
-  ones that show no path of the machine they were made on: `traffic.webp` is
-  `3-request.png` and `rpc.webp` is `92-rpc-transaction.png`.
+  tracewing's tests draw them with no display attached, written to
+  `target/shots/*.png`, resized to 1600×1000 and saved as WebP. Only ones that
+  show no path of the machine they were made on — which rules out most of the
+  local-mode shots, whose point is the programs they list by path:
+
+  | The picture    | Is                           | From               |
+  | -------------- | ---------------------------- | ------------------ |
+  | `traffic.webp` | `3-request.png`              | `--test screen`    |
+  | `rpc.webp`     | `92-rpc-transaction.png`     | `--test rpc`       |
+  | `setup.webp`   | `306-wizard-local-app.png`   | `--test wizard`    |
+  | `apps.webp`    | `local-5-on-keeping-two.png` | `--test local_tab` |
+  | `reading.webp` | `124-readings-pane-body.png` | `--test reading`   |
+
+  ```sh
+  cargo test --release -p tracewing --features headless \
+    --test screen --test rpc --test wizard --test local_tab --test reading
+  ```
+
+  The two paths in `apps.webp` are the test's own fixtures (`/usr/bin/curl` and
+  `/opt/my build`), not the machine's.
+
 - **Images.** `cd landing && node og/render.mjs` renders `public/og-image.png`
   from the hero's screenshot and the page's own words. It refuses to write a card
   whose text would run under the screenshot rather than writing a broken one.

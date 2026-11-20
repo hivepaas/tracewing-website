@@ -3,6 +3,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Features from '../components/Features.astro';
+import Ways from '../components/Ways.astro';
+import Local from '../components/Local.astro';
+import Reads from '../components/Reads.astro';
 import Measured from '../components/Measured.astro';
 import Chains from '../components/Chains.astro';
 import GetStarted from '../components/GetStarted.astro';
@@ -13,7 +16,7 @@ import { GITHUB_URL, SITE_URL } from '../data/site';
 const pageTitle =
   'tracewing — the HTTP debugging proxy that keeps up with big sessions';
 const pageDescription =
-  "For everything your browser's DevTools can't see: mobile apps, desktop apps, servers and AI agents. See, pause and change every request they make. A native HTTP(S) debugging proxy for Windows, macOS and Linux, built in Rust on GPUI: HTTP/1.1, HTTP/2, WebSocket and server-sent events decoded as they happen, breakpoints and rules to change traffic on the way, JSON-RPC and contract calls read as the calls they are, and a million flows that scroll at the display refresh rate. Free and open source, and nothing leaves your machine.";
+  "For everything your browser's DevTools can't see: mobile apps, desktop apps, servers and AI agents. See, pause and change every request they make — including the programs that read no proxy setting at all, which macOS hands over through a network extension and Windows and Linux route through an adapter of tracewing's own. A native HTTP(S) debugging proxy for Windows, macOS and Linux, built in Rust on GPUI: HTTP/1.1, HTTP/2, WebSocket and server-sent events decoded as they happen, breakpoints and rules to change traffic on the way, every value read where it stands, JSON-RPC and contract calls read as the calls they are, and a million flows that scroll at the display refresh rate. Free and open source, and nothing leaves your machine.";
 const siteUrl = `${SITE_URL}/`;
 const ogImage = new URL('/og-image.png', siteUrl).href;
 const structuredData = {
@@ -44,11 +47,14 @@ const faqData = {
   title={pageTitle}
   description={pageDescription}
   path="/"
-  keywords="http debugging proxy, https proxy, mitm proxy, charles proxy alternative, fiddler alternative, websocket debugging, grpc debugging, protobuf, json-rpc, web3 debugging, breakpoints, open source, Rust, tracewing"
+  keywords="http debugging proxy, https proxy, mitm proxy, charles proxy alternative, fiddler alternative, capture app without proxy settings, transparent proxy, network extension, websocket debugging, grpc debugging, protobuf, http/3, quic, json-rpc, web3 debugging, breakpoints, open source, Rust, tracewing"
   jsonLd={[structuredData, faqData]}
 >
   <Hero />
   <Features />
+  <Ways />
+  <Local />
+  <Reads />
   <Measured />
   <Chains />
   <GetStarted />

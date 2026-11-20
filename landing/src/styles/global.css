@@ -350,19 +350,25 @@ img {
   gap: 0.6rem;
 }
 
+/* The bullet hangs in the margin rather than being a flex item beside the
+   text. A flex item is what it used to be, and that made every inline tag in
+   the line — <strong>, <code>, <a> — a flex item too, so a sentence with one
+   in it was laid out as columns instead of as a sentence. */
 .check-list li {
-  display: flex;
-  gap: 0.6rem;
+  position: relative;
+  padding-left: 1.7rem;
   color: var(--text-secondary);
   font-size: 0.9375rem;
 }
 
 .check-list li::before {
   content: '';
-  flex: 0 0 auto;
+  position: absolute;
+  left: 0;
+  /* Centred on the first line: (1.6 line-height - 1.1rem bullet) / 2 */
+  top: 0.2rem;
   width: 1.1rem;
   height: 1.1rem;
-  margin-top: 0.22rem;
   border-radius: 50%;
   background:
     linear-gradient(var(--accent), var(--accent)) center / 0.5rem 0.12rem

@@ -219,6 +219,14 @@ const tabs = [...systems, ...comingSoon];
     gap: 2rem;
   }
 
+  /* A grid item's automatic minimum is its content, and the widest line in
+     the .term block below does not wrap — so without this the column is as
+     wide as that line and the whole page scrolls sideways on a phone. The
+     block has overflow-x of its own: it is the one that should scroll. */
+  .panel-grid > * {
+    min-width: 0;
+  }
+
   .requires {
     font-family: var(--font-mono);
     font-size: 0.8125rem;
@@ -273,7 +281,9 @@ const tabs = [...systems, ...comingSoon];
 
   @media (max-width: 60rem) {
     .panel-grid {
-      grid-template-columns: 1fr;
+      /* minmax(0, …), not a bare 1fr: 1fr means minmax(auto, 1fr), whose
+         minimum is the content's, which is what widened the page. */
+      grid-template-columns: minmax(0, 1fr);
       gap: 1.5rem;
     }
   }

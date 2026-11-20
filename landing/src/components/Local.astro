@@ -1,0 +1,243 @@
+---
+// Local.astro - the way in for a program that reads no proxy setting at all,
+// and the one thing about it that has to be said out loud: what is not chosen
+// is never read.
+//
+// The split drawn below is the design decision, not a diagram of the wiring.
+// The operating system routes by destination, and no route can say "this
+// program", so what arrives at the adapter is every connection leaving this
+// machine; which programs to keep is then a filter tracewing applies to what
+// is already its own. Saying only "it captures a program" would leave a
+// reader to assume the rest was captured too and merely hidden.
+import { CAPTURING_DOC_URL } from '../data/site';
+---
+
+<section class="section local" id="local">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Apps that ignore the proxy</span>
+      <h2>When there is no proxy setting to set</h2>
+      <p>
+        A Go binary, a Java program, an installer, a service, an Electron app
+        with a network stack of its own: plenty of programs never look at a
+        proxy setting, and no amount of setting one will bring them through. So
+        tracewing stops asking them, and has the operating system hand their
+        connections over instead.
+      </p>
+    </div>
+
+    <div class="local-inner">
+      <div class="local-text">
+        <ul class="check-list">
+          <li>
+            <strong>Nothing is told anything.</strong> On macOS a network extension
+            takes the flows of the apps you chose. On Windows and Linux an adapter
+            of tracewing's own, and routes into it, take this machine's traffic. One
+            tab and one answer cover both; which machinery is underneath is what nobody
+            should have to know.
+          </li>
+          <li>
+            <strong>One privileged step, once.</strong> The system asks you to allow
+            it, and the switch takes effect when it is pressed — no restart, and the
+            session open now carries on. On Linux the device stays with its carrier
+            down and its routes marked dead, so nothing is sent into it, and the next
+            run picks it up without asking again.
+          </li>
+          <li>
+            <strong>A program with no name of its own is taken by where it is.</strong>{' '}
+            Every Go binary <code>go build</code> makes is <code>a.out</code>, and
+            what a linker signs changes with each build — so pick the file, or the
+            folder it is built into, and it keeps working across rebuilds.
+          </li>
+          <li>
+            <strong>HTTP/3, for a program you chose.</strong> Its QUIC is terminated
+            on the adapter and the server is asked over HTTP/3 too. Off by default:
+            a program nobody chose is refused and falls back to HTTP/2 — and that
+            refusal is still a row, with the server name it asked for and the program
+            that sent it.
+          </li>
+          <li>
+            <strong>Every flow says which way in took it</strong>, so a session
+            mixing a phone, a terminal and a chosen program is still readable.{' '}
+            <a href={CAPTURING_DOC_URL}>What each way in takes</a> is written down.
+          </li>
+        </ul>
+      </div>
+
+      <div class="split" role="group" aria-label="What the adapter does with each connection">
+        <p class="split-top">
+          Everything this machine sends arrives at tracewing's own adapter
+        </p>
+        <div class="split-lanes">
+          <article class="lane lane-kept">
+            <span class="lane-tag">Kept</span>
+            <h3 class="lane-title">The programs you chose</h3>
+            <p class="lane-text">
+              Decrypted, recorded, paused on a breakpoint, changed by a rule —
+              everything the rest of tracewing does.
+            </p>
+          </article>
+          <article class="lane lane-passed">
+            <span class="lane-tag">Passed on</span>
+            <h3 class="lane-title">Everything else</h3>
+            <p class="lane-text">
+              Spliced straight through. Its TLS is never terminated and nothing
+              of it is stored. There is no capture-everything mode, by design.
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <figure class="local-shot">
+      <img
+        src="/shots/apps.webp"
+        width="1600"
+        height="1000"
+        alt="Settings, Capture, Apps: the tab strip of every way in, with the Apps tab open — what it catches, what it does not, and the two programs it keeps."
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption>
+        Settings › Capture, where every way in has a tab of its own. Each one
+        says what it catches, what it does not, and what has to trust tracewing.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .local {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .local-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 3rem;
+  }
+
+  .split {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    padding: var(--card-pad);
+  }
+
+  .split-top {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    padding-bottom: 1.25rem;
+    position: relative;
+  }
+
+  /* The one line in, splitting into the two lanes under it. */
+  .split-top::after {
+    content: '';
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    bottom: 0;
+    height: 0.75rem;
+    border: 1px solid var(--border-card);
+    border-bottom: 0;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .split-lanes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-top: 0.75rem;
+  }
+
+  .lane {
+    padding: var(--inset-pad);
+    border-radius: 12px;
+    border: 1px solid var(--border-card);
+    background: var(--bg-inset);
+  }
+
+  .lane-kept {
+    border-color: rgba(122, 162, 255, 0.4);
+    background: rgba(122, 162, 255, 0.08);
+  }
+
+  .lane-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .lane-kept .lane-tag {
+    color: var(--accent-light);
+  }
+
+  .lane-passed .lane-tag {
+    color: var(--text-muted);
+  }
+
+  .lane-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .lane-passed .lane-title {
+    color: var(--text-secondary);
+  }
+
+  .lane-text {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .local-shot {
+    margin: 0;
+  }
+
+  .local-shot img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+  }
+
+  .local-shot figcaption {
+    margin-top: 1rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+  }
+
+  @media (max-width: 60rem) {
+    .local-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .split-lanes {
+      grid-template-columns: 1fr;
+    }
+
+    .split-top::after {
+      left: 50%;
+      right: auto;
+      width: 1px;
+      border-radius: 0;
+      border-width: 0 0 0 1px;
+    }
+  }
+</style>

@@ -5,16 +5,18 @@ import {
   CONTRIBUTING_URL,
   FEATURES_DOC_URL,
   GITHUB_URL,
-  HIVEPAAS_URL,
   ISSUES_URL,
   LICENSE_URL,
   MEASUREMENTS_DOC_URL,
-  PACKWING_URL,
+  PRODUCT_ID,
+  PRODUCTS,
   SCRIPTS_DOC_URL,
-  SHELLWING_URL,
 } from '../data/site';
 
 const year = new Date().getFullYear();
+
+// The Products column shows the hive's other apps, not this one.
+const others = PRODUCTS.filter((product) => product.id !== PRODUCT_ID);
 
 const columns = [
   {
@@ -46,12 +48,12 @@ const columns = [
     ],
   },
   {
-    title: 'HivePaaS',
-    links: [
-      { text: 'hivepaas', href: HIVEPAAS_URL },
-      { text: 'shellwing', href: SHELLWING_URL },
-      { text: 'packwing', href: PACKWING_URL },
-    ],
+    title: 'Products',
+    links: others.map((product) => ({
+      text: product.name,
+      href: product.href,
+      sub: product.tagline,
+    })),
   },
 ];
 ---
@@ -66,7 +68,13 @@ const columns = [
             <ul>
               {column.links.map((link) => (
                 <li>
-                  <a href={link.href}>{link.text}</a>
+                  <a
+                    href={link.href}
+                    class={link.sub ? 'footer-product' : undefined}
+                  >
+                    {link.text}
+                    {link.sub && <span class="footer-sub">{link.sub}</span>}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -120,6 +128,20 @@ const columns = [
 
   .footer a:hover {
     color: var(--text-primary);
+  }
+
+  /* An app's name with what it is under it */
+  .footer-product {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-weight: 600;
+  }
+
+  .footer-sub {
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+    font-weight: 400;
   }
 
   .footer-note {

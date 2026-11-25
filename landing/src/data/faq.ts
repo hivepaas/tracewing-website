@@ -15,12 +15,17 @@ export const faq: Question[] = [
   {
     question: 'How does it see inside HTTPS?',
     answer:
-      'It makes a certificate authority on your machine the first time it runs, and issues a certificate per host from it. That authority never leaves the machine, and nothing is sent anywhere: there is no account, no cloud and no telemetry.',
+      'It makes a certificate authority on your machine the first time it runs, and issues a certificate per host from it. That authority never leaves the machine, and nothing you record is sent anywhere: there is no account, no cloud and no telemetry.',
   },
   {
     question: 'What does it cost?',
     answer:
       'Nothing. It is free to download and the source is GPL-3.0-or-later. Whether some parts are paid for later has not been decided, and nothing on this page is a price.',
+  },
+  {
+    question: 'How does it update?',
+    answer:
+      'Once a day it asks GitHub whether there is a newer version: one request, with nothing of yours in it. The list of releases is signed twice, with Ed25519 and ML-DSA-65, and each file is checked against its SHA-256 before it is used. On Windows and macOS a new version installs in one click, as tracewing quits; with a .deb or .rpm it shows the commands to run. Settings › About turns the daily look off.',
   },
   {
     question: 'Is it an Electron app?',

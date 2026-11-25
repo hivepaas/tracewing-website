@@ -38,11 +38,11 @@ yarn lint
   whose text would run under the screenshot rather than writing a broken one.
 - **Downloads.** `landing/src/data/downloads.ts` names the release's files as
   tracewing's releases name them: a new release changes `VERSION` only. The
-  names follow the house's convention (packwing's releases), and tracewing has
-  no release workflow yet — so when one is written, four things in that file
-  have to agree with it, and its comment lists them: the file names, which Linux
-  packages are built, whether each build is signed (what `firstRun` tells the
-  reader), and the oldest glibc the Linux build runs on.
+  names follow the house's convention (packwing's releases) and were checked
+  against tracewing's v0.1.0 release. Four things in that file have to agree with
+  tracewing's release workflow and notes, and its comment lists them: the file
+  names, which Linux packages are built, whether each build is signed (what
+  `firstRun` tells the reader), and the oldest glibc the Linux build runs on.
 - **Pricing.** There is no pricing page: what is free and what is paid has not
   been settled, and a price nobody has decided is not something to publish.
   `SHOW_PRICING` in `landing/src/data/site.ts` is where it goes when it is.

@@ -6,7 +6,7 @@ The website of [tracewing](https://github.com/hivepaas/tracewing), at
 
 ```sh
 yarn install
-yarn dev            # http://localhost:3202
+yarn dev            # http://localhost:3200
 yarn build          # landing/dist
 yarn lint
 ```
@@ -46,4 +46,4 @@ yarn lint
 - **Pricing.** There is no pricing page: what is free and what is paid has not
   been settled, and a price nobody has decided is not something to publish.
   `SHOW_PRICING` in `landing/src/data/site.ts` is where it goes when it is.
-- **Release.** A tag `vX.Y.Z` builds the image (nginx serving the static site on 3202) and pushes it to `ghcr.io/hivepaas/tracewing-website`.
+- **Release.** A tag `vX.Y.Z` builds the image (nginx serving the static site on 3200) and pushes it to `ghcr.io/hivepaas/tracewing-website`.

@@ -1,5 +1,5 @@
 # The website: the landing page (Astro), built as static files and served by
-# nginx on 3202. Its preview server (astro preview) is for a laptop: it refuses
+# nginx on 3200. Its preview server (astro preview) is for a laptop: it refuses
 # any host but localhost.
 
 FROM node:24-alpine AS builder
@@ -21,4 +21,4 @@ FROM nginxinc/nginx-unprivileged:1.30.5-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/landing/dist /usr/share/nginx/landing
 
-EXPOSE 3202
+EXPOSE 3200

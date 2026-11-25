@@ -2,10 +2,10 @@
 // release names them. A new release changes VERSION only.
 //
 // The names follow the house's convention, the one packwing's releases use
-// (`<app>_<version>_<os>_<arch>.<kind>`, and `<app>_<version>_<arch>.deb`).
-// tracewing has no release workflow yet, so nothing here has been checked
-// against a file that exists: when the workflow is written, these four have to
-// agree with it —
+// (`<app>_<version>_<os>_<arch>.<kind>`, and `<app>_<version>_<arch>.deb`),
+// and were checked against the files of tracewing's v0.1.0 release. Four
+// things here have to agree with tracewing's release workflow
+// (.github/workflows/release.yml) and its notes (docs/releases/):
 //
 //   1. the file names below,
 //   2. which Linux packages are built (.deb and .rpm here),
@@ -14,7 +14,7 @@
 
 import { GITHUB_URL } from './site';
 
-export const VERSION = '0.1.0';
+export const VERSION = '0.1.1';
 export const RELEASES_URL = `${GITHUB_URL}/releases`;
 export const RELEASE_URL = VERSION
   ? `${GITHUB_URL}/releases/tag/v${VERSION}`
@@ -62,7 +62,8 @@ export const systems: Os[] = [
   {
     id: 'linux',
     name: 'Linux',
-    requires: 'Wayland or X11, x86_64 or aarch64',
+    requires:
+      'glibc 2.35 or later (Ubuntu 22.04, Debian 12), Wayland or X11, x86_64 or aarch64',
     downloads: [
       {
         label: 'Debian / Ubuntu',

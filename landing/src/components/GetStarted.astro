@@ -1,18 +1,10 @@
 ---
-// GetStarted.astro - the release's files, one system at a time, and the way to
-// build it instead.
+// GetStarted.astro - the release's files, one system at a time.
 //
 // The panels are all shown until the script picks one: with no JavaScript the
 // page is three stacked panels rather than one system's files and no way to
 // reach the others.
-import {
-  RELEASE_URL,
-  VERSION,
-  comingSoon,
-  fromSource,
-  systems,
-} from '../data/downloads';
-import { BUILD_DOC_URL } from '../data/site';
+import { RELEASE_URL, VERSION, comingSoon, systems } from '../data/downloads';
 
 const tabs = [...systems, ...comingSoon];
 ---
@@ -102,28 +94,6 @@ const tabs = [...systems, ...comingSoon];
           </div>
         ))
       }
-    </div>
-
-    <div class="bento-card source">
-      <h3 class="bento-title">Or build it from source</h3>
-      <p class="bento-text">
-        Needs Rust; the repository's <code>rust-toolchain.toml</code> picks the
-        version. On Linux the window also needs the packages named in the CI
-        workflow, and builds for Wayland unless you ask for X11.
-      </p>
-      <div class="term">
-        {
-          fromSource.map((line) => (
-            <div>
-              <span class="prompt">$ </span>
-              {line}
-            </div>
-          ))
-        }
-      </div>
-      <a href={BUILD_DOC_URL} class="btn btn-secondary source-btn"
-        >Build instructions</a
-      >
     </div>
   </div>
 </section>
@@ -269,14 +239,6 @@ const tabs = [...systems, ...comingSoon];
     gap: 0.5rem;
     color: var(--text-secondary);
     font-size: 0.9375rem;
-  }
-
-  .source {
-    margin-top: 1.5rem;
-  }
-
-  .source-btn {
-    margin-top: 1.25rem;
   }
 
   @media (max-width: 60rem) {

@@ -159,11 +159,3 @@ sudo zypper --no-gpg-checks install ./tracewing_${v}_x86_64.rpm`,
 ];
 
 export const comingSoon: ComingSoon[] = [];
-
-/** Building it from source, which works on all three. */
-export const fromSource = [
-  'git clone https://github.com/hivepaas/tracewing',
-  'cd tracewing',
-  'make release                  # the window; its proxy listens on 127.0.0.1:9090',
-  'make playground               # a server to try it on, at http://localhost:10000',
-];
